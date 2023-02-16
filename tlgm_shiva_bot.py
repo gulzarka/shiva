@@ -62,6 +62,8 @@ def main():
             text='AAA!'
         )
 
+    bot.infinity_polling()
+
 
 if __name__ == '__main__':
     main()
