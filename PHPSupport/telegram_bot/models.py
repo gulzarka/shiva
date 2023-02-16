@@ -38,7 +38,7 @@ class Request(models.Model):
         MEDIUM = 'MEDM', ('medium')
         HARD = 'HARD', ('hard')
 
-    status = models.CharField(
+    difficulty = models.CharField(
         max_length=4,
         choices=RequestDifficulty.choices,
     )
