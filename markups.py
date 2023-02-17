@@ -10,19 +10,13 @@ def start_message(message):
     bot_command = types.BotCommand('start', 'start page')
     command_scope = types.BotCommandScopeChat(message.chat.id)
     bot.set_my_commands([bot_command], command_scope)
-    button1 = types.InlineKeyboardButton('Я-клиент', callback_data='client')
     button2 = types.InlineKeyboardButton('Я-заказчик', callback_data='customer')
     button3 = types.InlineKeyboardButton('Я-подрядчик', callback_data='executer')
     markup = types.InlineKeyboardMarkup()
-    markup.add(button1, button2, button3)
+    markup.add(button2, button3)
     bot.send_message(message.chat.id,
                      reply_markup=markup,
                      text='Добро пожаловать в сервис "Shiva"! Для продолжения выберите пожалуйста ваш статус')
-    
-
-@bot.callback_query_handler(func=lambda call: call.data == "client")
-def client(call: types.CallbackQuery):
-    bot.send_message(call.message.chat.id, text='Hi client!')
 
 
 @bot.callback_query_handler(func=lambda call: call.data == "customer")
