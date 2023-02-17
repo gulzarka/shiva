@@ -1,7 +1,7 @@
 from .models import Subcontractor, Client
 
 
-def is_user_suncontractor(user_id):
+def is_user_subcontractor(user_id):
     return Subcontractor.objects.filter(telegram_id=user_id).first()
 
 
