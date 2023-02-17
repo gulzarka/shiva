@@ -1,9 +1,9 @@
-from django.core.management import BaseCommand
 import logging
+from django.core.management import BaseCommand
 import telebot
 from environs import Env
 from telebot import types
-from telegram_bot.crud import is_user_client, is_user_subcontractor
+from telegram_bot.crud import is_user_client, is_user_subcontractor, add_executer
 
 
 logger = logging.getLogger(__file__)
@@ -53,7 +53,7 @@ def start_bot():
         bot.send_message(
             message.chat.id,
             reply_markup=markup,
-            text='Добро пожаловать в сервис "Shiva"! Для продолжения выберите'
+            text='Добро пожаловать в сервис PHPSupport! Для продолжения выберите'
                  'пожалуйста ваш статус'
         )
 
@@ -64,13 +64,22 @@ def start_bot():
 
     @bot.callback_query_handler(func=lambda call: call.data == "executer")
     def executer(call: types.CallbackQuery):
-        button = types.InlineKeyboardButton('choose', callback_data='client')
+        bot.answer_callback_query(callback_query_id=call.id)
+        button1 = types.InlineKeyboardButton('Да', callback_data='yes_executer')
+        button2 = types.InlineKeyboardButton('Нет', callback_data='no_executer')
         markup = types.InlineKeyboardMarkup()
-        markup.add(button)
+        markup.add(button1, button2)
         bot.send_message(
             call.message.chat.id,
             reply_markup=markup,
-            text='Зарегистрировать вас как исполнителя?'
+            text='Вы согласны с условиями PHPSupport?'
         )
+
+    @bot.callback_query_handler(func=lambda call: call.data == "yes_executer")
+    def yes_executer(call: types.CallbackQuery):
+        bot.answer_callback_query(callback_query_id=call.id)
+        print(call)
+        add_executer(call.from_user.id)
+        bot.send_message(call.message.chat.id, text="Заявка отправлена на рассмотрение")
 
     bot.infinity_polling()
