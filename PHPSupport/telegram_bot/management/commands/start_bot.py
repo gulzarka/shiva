@@ -59,6 +59,7 @@ def start_bot():
 
     @bot.callback_query_handler(func=lambda call: call.data == "client")
     def client(call: types.CallbackQuery):
+        bot.answer_callback_query(callback_query_id=call.id)
         bot.send_message(call.message.chat.id, text="Зарегистрировать вас как клиента?")
 
     @bot.callback_query_handler(func=lambda call: call.data == "executer")
