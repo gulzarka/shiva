@@ -20,8 +20,6 @@ class Request(models.Model):
     php_link = models.CharField('php link', max_length=50)
     clarification = models.ForeignKey(Clarification, verbose_name='clarification', on_delete=models.CASCADE)
 
-
-
     REQUEST_STATUS_CHOICES = [
          ('pending', 'Pending'),
          ('open', 'Open'),
