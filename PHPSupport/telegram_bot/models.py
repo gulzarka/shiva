@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 
 
 class Client(models.Model):
@@ -11,7 +10,7 @@ class Client(models.Model):
 
     @property
     def is_active(self):
-        if datetime.now() < self.subscription_end:
+        if timezone.now() < self.subscription_end:
             return True
         else:
             return False
@@ -81,4 +80,3 @@ class Clarification(models.Model):
 
     def __str__(self):
         return self.question
-
